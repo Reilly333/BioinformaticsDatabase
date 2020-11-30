@@ -1,1 +1,1 @@
-[2_cases_and_deaths_by_county_timeseries.csv](2_cases_and_deaths_by_county_timeseries.csv -https://data.world/associatedpress/johns-hopkins-coronavirus-case-tracker/workspace/file?filename=2_cases_and_deaths_by_county_timeseries.csv )
+[cases_and_deaths_by_county_timeseries.csv](https://data.world/associatedpress/johns-hopkins-coronavirus-case-tracker/workspace/file?filename=2_cases_and_deaths_by_county_timeseries.csv)
