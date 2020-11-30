@@ -24,6 +24,7 @@ def covid_cases_string_to_date(date_value):
 
 def add_covid_case_data_from_file(fp):
     with open(fp) as csv_file:
+        error_count = 0
         csv_reader = csv.reader(csv_file, delimiter=',')
         row_count = sum(1 for row in csv_file)
         csv_file.seek(0)
@@ -127,12 +128,14 @@ def add_covid_case_data_from_file(fp):
                              new_cases_7_day_rolling_avg,
                              new_deaths_7_day_rolling_avg))
             except sqlite3.IntegrityError:
-                print('Skipping inserting {}, {} as it already exists.'.format(fips_code, date))
+                error_count += 1
         conn.commit()
+        print('Encountered {} errors during insertion of data.'.format(error_count))
 
 
 def add_covid_temperature_data_from_file(fp):
     with open(fp) as csv_file:
+        error_count = 0
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
         for i, row in enumerate(csv_reader):
@@ -202,8 +205,9 @@ def add_covid_temperature_data_from_file(fp):
                              avg_humidity_specific_2m_gpkg,
                              max_humidity_specific_2m_gpkg))
             except sqlite3.IntegrityError:
-                print('Skipping inserting {}, {} as it already exists.'.format(fips_code, date))
+                error_count += 1
         conn.commit()
+        print('Encountered {} errors during insertion of data.'.format(error_count))
 
 
 if __name__ == '__main__':
@@ -213,4 +217,5 @@ if __name__ == '__main__':
 
     print('Adding Weather Data.')
     for fp in pb(os.listdir('raw_data/weather_data')):
+        print('Adding temperature data from {}...'.format(fp))
         add_covid_temperature_data_from_file(os.path.join('raw_data', 'weather_data', fp))
